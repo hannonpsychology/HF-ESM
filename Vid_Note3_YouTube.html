@@ -1,0 +1,415 @@
+<html>
+<title>Video Notation Tool v2</title>
+
+
+<style>
+
+#title {
+	font-family:arial;
+}
+
+#file_select {
+	font-family:arial;
+	height:40px;
+}
+
+#video_div {
+	float:left;
+	overflow:hidden;
+	width:400px;
+	height:300px;
+	border: 3px solid #000000;
+}
+#data_view {
+	font-family:arial;
+	text-align: center;
+	overflow:scroll;
+	width:250px;
+	height:300px;
+    border-bottom: 3px solid #000000;
+    border-right: 3px solid #000000;
+    border-top: 3px solid #000000;
+}
+
+#labels {
+	font-family:arial;
+	width:650px;
+}
+
+#last {
+	font-family:arial;
+	text-align: center;
+	float:left;
+	width:650px;
+	height:50px;
+	margin:20px;
+}
+
+#left_outside {
+	display: inline-block;
+	float:left;
+	font-family:arial;
+	width:25%;
+}
+
+#left_inside {
+	display: inline-block;
+	float:left;
+	font-family:arial;
+	width:25%;
+}
+
+#right_inside {
+	display: inline-block;
+	float:left;
+	font-family:arial;
+	width:25%;
+}
+
+#right_outside {
+	display: inline-block;
+	float:left;
+	font-family:arial;
+	width:25%;
+}
+
+.button{
+    background-color: #aaaaaa; /* White */
+    border:solid;
+    color: gray;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 2px 2px;
+    cursor: pointer;
+}
+
+
+.in_use_button{
+    background-color: #AAFFAA; /* Green */
+    border:solid;
+    color: black;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 2px 2px;
+    cursor: pointer;
+    width:135px;
+}
+
+</style>
+
+<body>
+
+<div id="title">
+	<H1>Video Notation Tool</H1>
+</div>
+
+<div id="file_select">
+	Type or paste the YouTube video link:
+	<input type="text" name="YouTube_Link" id="video_file" onchange="getVidFile(this.files)">
+	<button onclick="create_src()" type="button">Download Video</button>
+	<button onclick="download('filename.txt', output_string)" type="button">Save the data</button>
+</div>
+
+<div id="wrapper">
+	<div id="video_div">
+	    
+<iframe id="myVideo"
+        width="400" height="300"
+        src="https://www.youtube.com/embed/tgbNymZ7vqY?enablejsapi=1"
+        frameborder="0"
+        style="border: solid 4px #37474F"
+></iframe>	
+
+	</div>
+	
+	<div id="data_view">
+		<H5>Data View</H5>
+		 <textarea name="txt" id="txt" rows="1000" cols="500"></textarea>
+	</div>
+</div>
+
+<div id="labels">
+	<div id="left_outside">
+		<button id="lo1" class="button" onmousedown="button_press('lo1', event)" type="button">Click to add a label</button>
+		<button id="lo2" class="button" onmousedown="button_press('lo2', event)" type="button">Click to add a label</button>
+		<button id="lo3" class="button" onmousedown="button_press('lo3', event)" type="button">Click to add a label</button>
+		<button id="lo4" class="button" onmousedown="button_press('lo4', event)" type="button">Click to add a label</button>
+		<button id="lo5" class="button" onmousedown="button_press('lo5', event)" type="button">Click to add a label</button>
+	</div>
+	
+	<div id="left_inside">
+		<button id="li1" class="button" onmousedown="button_press('li1', event)" type="button">Click to add a label</button>
+		<button id="li2" class="button" onmousedown="button_press('li2', event)" type="button">Click to add a label</button>
+		<button id="li3" class="button" onmousedown="button_press('li3', event)" type="button">Click to add a label</button>
+		<button id="li4" class="button" onmousedown="button_press('li4', event)" type="button">Click to add a label</button>
+		<button id="li5" class="button" onmousedown="button_press('li5', event)" type="button">Click to add a label</button>
+	</div>
+	
+	<div id="right_inside">
+		<button id="ri1" class="button" onmousedown="button_press('ri1', event)" type="button">Click to add a label</button>
+		<button id="ri2" class="button" onmousedown="button_press('ri2', event)" type="button">Click to add a label</button>
+		<button id="ri3" class="button" onmousedown="button_press('ri3', event)" type="button">Click to add a label</button>
+		<button id="ri4" class="button" onmousedown="button_press('ri4', event)" type="button">Click to add a label</button>
+		<button id="ri5" class="button" onmousedown="button_press('ri5', event)" type="button">Click to add a label</button>
+	</div>
+	
+	<div id="right_outside">
+		<button id="ro1" class="button" onmousedown="button_press('ro1', event)" type="button">Click to add a label</button>
+		<button id="ro2" class="button" onmousedown="button_press('ro2', event)" type="button">Click to add a label</button>
+		<button id="ro3" class="button" onmousedown="button_press('ro3', event)" type="button">Click to add a label</button>
+		<button id="ro4" class="button" onmousedown="button_press('ro4', event)" type="button">Click to add a label</button>
+		<button id="ro5" class="button" onmousedown="button_press('ro5', event)" type="button">Click to add a label</button>
+	</div>
+</div>
+
+<div id="last">
+	<button onclick="sort_data()" type="button">Sort the data by time</button>
+	<button onclick="Add_Note()" type="button">Add a note to a data element</button>
+	<button onclick="Edit_Data()" type="button">Edit a data element</button><br><br>
+	(Right click any label to reset it.)
+	
+</div>
+
+<script>
+
+ 	//var player = document.getElementById('myVideo');	//create a varialbe for the video viewer
+var array1 = [['Index','Time','Label','Note']];							//establish a 2-d array to hold the data
+var indx = 1;
+var note = "";
+var output_string = "";
+var rst = 0;
+ 	
+ 	var tag = document.createElement('script');
+    tag.id = 'iframe-demo';
+    tag.src = 'https://www.youtube.com/iframe_api';
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var player;
+ 	
+ 	document.getElementById("txt").value = output_string;	//clear old data
+ 	//document.getElementById('myVideo').name = "";			//clear name of last video file
+
+
+	function getCurTime() { 								//function to get the time of the video and add to array1
+    	//array1.push('jumping ',vid.currentTime +"\r\n");
+    	array1.push('jumping ',vid.getCurrentTime() +"\r\n");
+    	//document.getElementById("txt").value = array1;
+ 	} 
+
+    function create_src() {      //function to link to selected YouTube video
+        output_string = "";
+        document.getElementById("txt").value = "";	//clear old data
+        
+        /*var indx;
+        
+        for (var i = 0; i =indx; i++) {
+            delete array1[i][1];
+            delete array1[i][2];
+            delete array1[i][3];
+            delete array1[i][4];
+        }*/
+        
+        src = document.getElementById('video_file').value;
+        ytid = src.substr(src.length - 11);
+        player.loadVideoById(ytid);
+        
+        //alert ('ready to re-initialize variables');
+        array1 = [['Index','Time','Label','Note']];							//establish a 2-d array to hold the data
+ 	    /*indx = 1;
+ 	    note = "";
+ 	    rst = 1;
+ 	    alert('rst: ' + rst);*/
+   }
+
+
+
+	function download(filename, text) {						//function to save the data to a text file
+  		var element = document.createElement('a');
+  		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  		element.setAttribute('download', filename);
+  		element.style.display = 'none';
+  		document.body.appendChild(element);
+  		element.click();
+  		document.body.removeChild(element);
+	}
+
+
+	function button_press(button_id, event) { 									//function to collect data
+		var button_id;
+
+		if (document.getElementById(button_id).innerHTML=="Click to add a label") {
+		 
+			var label2 = prompt("Write in a label:");
+    		document.getElementById(button_id).innerHTML = label2;
+    		document.getElementById(button_id).className = "in_use_button";
+ 		} 
+ 		else if (event.button == 2) {
+ 			//alert('Are you sure you want to reset this label?  Hit "esc" key to cancel.');
+
+			var answer = confirm("Are you sure you want to reset this label?")
+				if (answer) {
+    				document.getElementById(button_id).innerHTML = "Click to add a label";
+    				document.getElementById(button_id).className = "button";
+				}
+				else {
+    					//do nothing
+				}
+ 		}     //add code to write data to array1
+ 		else {
+ 		    
+ 		   /* if (rst == 1){
+ 		        indx = 1;
+ 		        rst = 0;
+ 		        alert('should be resetting');
+ 		        } else {
+ 		           //do nothing 
+ 		        }*/
+ 		    
+ 		    //alert('indx: ' + indx + ' rst: ' + rst);
+ 			array1.push([indx, player.getCurrentTime(), document.getElementById(button_id).innerHTML, "'" + note + "'"]);
+ 			Create_Str();
+ 			//alert("output string: " + output_string);
+ 			document.getElementById("txt").value = output_string;
+ 			indx++
+ 			
+ 			//alert(array1[1][2]);
+ 		}
+ 	}
+
+//added from YouTube API
+
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player("myVideo", {
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+    });
+  }
+  
+  function onPlayerReady(event) {
+    document.getElementById('myVideo').style.borderColor = '#FF6D00';
+  }
+  
+  function changeBorderColor(playerStatus) {
+    var color;
+    if (playerStatus == -1) {
+      color = "#37474F"; // unstarted = gray
+    } else if (playerStatus == 0) {
+      color = "#FFFF00"; // ended = yellow
+    } else if (playerStatus == 1) {
+      color = "#33691E"; // playing = green
+    } else if (playerStatus == 2) {
+      color = "#DD2C00"; // paused = red
+    } else if (playerStatus == 3) {
+      color = "#AA00FF"; // buffering = purple
+    } else if (playerStatus == 5) {
+      color = "#FF6DOO"; // video cued = orange
+    }
+    if (color) {
+      document.getElementById('myVideo').style.borderColor = color;
+    }
+  }
+  function onPlayerStateChange(event) {
+    changeBorderColor(event.data);
+  }
+
+//end YouTube API add*/
+
+ 	function sort_data() {									//function to sort the data in the file
+		array1.sort(function(a,b) {
+    	return a[1]-b[1]  //https://stackoverflow.com/questions/16096872/how-to-sort-2-dimensional-array-by-column-value
+			});
+
+		for (var i = 0; i < array1.length; i++) {		//re-indexes the values in sequence after sorting in time order
+			array1[i][0] = i;
+			}
+
+		array1[0][0] = 'Index';			//The first row should be all labels
+
+		Create_Str();
+		document.getElementById("txt").value = output_string;
+		}
+
+
+	function getVidFile(file_name) {									//function to select the video file
+		//var video_file_name = document.getElementById('video_file').files[0].name;
+		//alert('getVidFile started');
+		//alert('Confirm that video file name is: ' + video_file_name);
+
+		//wait(3000);
+		//var video_file_name = document.getElementById('video_file').value;
+		//var video_file_name = file_name.name;
+		//video_file_name = video_file_name.replace(/.*[\/\\]/, '');
+		//alert(video_file_name);
+		//document.getElementById('myVideo').src = video_file_name;
+		document.getElementById('myVideo').src = "file:///~Users/danielhannon/Desktop/Vid_Note/" + document.getElementById('video_file').files[0].name;
+	}
+
+
+	function Add_Note() {
+		var indx_value = prompt("Enter the Index of the data element where you want to add the note:");
+		var note = prompt("Write the note here:");
+		array1[indx_value][3] = "'" + note + "'";
+		Create_Str();
+		document.getElementById("txt").value = output_string;
+    	//document.getElementById(button_id).innerHTML = label2;
+	}
+
+
+	function Create_Str() {
+		//lngth = array1.length;
+		//alert(lngth);
+		output_string="";
+		//alert('length: ' + array1.length);
+		for (var i = 0; i < array1.length; i++) {
+			output_string = output_string + array1[i][0] + ", " + array1[i][1] + ", " + array1[i][2] + ", " + array1[i][3] + "\r\n";
+
+		}
+	}
+
+	function Edit_Data() {
+		var indx_value = prompt("Enter the Index of the data element where you want to add the note:");
+ 
+		var new_time = prompt("The current time is: " + array1[indx_value][1] + " Write the new time here:");
+
+			if (new_time == null || new_time == "") {
+    				//do nothing
+			} else {
+    			array1[indx_value][1] = new_time;
+			} 
+
+		var new_label = prompt("The current label is: " + array1[indx_value][2] + " Write the new label here:");
+
+			if (new_label == null || new_label == "") {
+    				//do nothing
+			} else {
+    			array1[indx_value][2] = new_label;
+			} 
+
+		var new_note = prompt("The current note is: " + array1[indx_value][3] + " Write the new note here:");
+
+			if (new_note == null || new_note == "") {
+    				//do nothing
+			} else {
+    			array1[indx_value][3] = new_note;
+			} 
+
+		Create_Str();
+		document.getElementById("txt").value = output_string;
+	}
+
+</script>
+
+</body>
+
+</HTML>
+
+
+
